@@ -46,6 +46,10 @@ class VoteEnum(enum.Enum):
     disagree = "disagree"
     neutral = "neutral"
 
+class MarketEnum(enum.Enum):
+    vn = "vn"
+    global_market = "global"  # Database stores as 'global', Python uses global_market
+
 # ------------------------
 # Tables
 # ------------------------
@@ -84,6 +88,7 @@ class News(Base):
     archived_at = Column(DateTime(timezone=True))
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    market = Column(SAEnum(MarketEnum), default=MarketEnum.global_market, nullable=False)
 
     analyses = relationship("Analysis", back_populates="news")
 

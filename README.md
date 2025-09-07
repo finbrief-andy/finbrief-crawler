@@ -1,6 +1,9 @@
 Main steps:
 
-1. Ingest news from Finnhub: run src/crawlers/ingest_finnhub.py
+1. Ingest news from multiple sources: `PYTHONPATH=. python3 src/crawlers/unified_pipeline.py`
+   - Unified pipeline processes both global (Finnhub) and Vietnamese (VnExpress) news
+   - Complete workflow: fetch → dedupe → store → summarize → sentiment → analysis
+   - Single command runs all sources with full NLP processing
 2. Export training data
 
 - Usage: python src/models/export_training_data.py --out data/training/train.jsonl
