@@ -24,4 +24,14 @@ Main steps:
 - Generate Action Strategy
 - Insert into analysis table
 
-5. Store feedback: run store_feedback.py
+5. Run API Server
+
+- Usage: `cd src/api/feedbacks && PYTHONPATH=../../.. python3 -m uvicorn feedback_api:app --reload --port 8000`
+- Starts FastAPI server for feedback collection
+- Endpoints:
+  - POST /feedback - Submit feedback for an analysis
+  - GET /analysis/{analysis_id}/feedback - List feedback for an analysis
+  - GET /news/{news_id}/analysis - List analyses for a news item
+  - GET /feedback/{feedback_id} - Fetch a single feedback entry
+- API will be available at: http://localhost:8000
+- Interactive docs: http://localhost:8000/docs

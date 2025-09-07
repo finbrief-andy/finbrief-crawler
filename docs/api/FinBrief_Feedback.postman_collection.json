@@ -1,67 +1,526 @@
 {
   "info": {
-    "name": "FinBrief Feedback API",
-    "_postman_id": "fb-demo-collection",
-    "description": "Test feedback flow for FinBrief",
+    "name": "FinBrief API Complete Collection",
+    "_postman_id": "fb-complete-api-collection",
+    "description": "Complete FinBrief API collection with Authentication and Feedback endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
     {
-      "name": "Submit Feedback",
-      "request": {
-        "method": "POST",
-        "header": [{ "key": "Content-Type", "value": "application/json" }],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n  \"analysis_id\": 1,\n  \"user_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"comment\": \"This action makes sense.\"\n}"
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/signup",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "signup"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/signup",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "signup"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"email\": \"test@example.com\",\n  \"created_at\": \"2025-09-07T15:18:55.179264+07:00\"\n}"
+            }
+          ]
         },
-        "url": {
-          "raw": "http://localhost:8000/feedback",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["feedback"]
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const jsonData = pm.response.json();",
+                  "    pm.environment.set('token', jsonData.access_token);",
+                  "    pm.collectionVariables.set('token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              }
+            ],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                { "key": "username", "value": "test@example.com", "type": "text" },
+                { "key": "password", "value": "123456", "type": "text" }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/x-www-form-urlencoded"
+                  }
+                ],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    { "key": "username", "value": "test@example.com", "type": "text" },
+                    { "key": "password", "value": "123456", "type": "text" }
+                  ]
+                },
+                "url": {
+                  "raw": "{{base_url}}/auth/login",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...\",\n  \"token_type\": \"bearer\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Get Current User (me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/auth/me",
+                  "host": ["{{base_url}}"],
+                  "path": ["auth", "me"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"email\": \"test@example.com\",\n  \"created_at\": \"2025-09-07T15:18:55.179264+07:00\"\n}"
+            }
+          ]
         }
-      }
+      ]
     },
     {
-      "name": "List Feedback for Analysis",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8000/analysis/1/feedback",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["analysis", "1", "feedback"]
+      "name": "Feedback",
+      "item": [
+        {
+          "name": "Submit Feedback (Vote)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analysis_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"comment\": \"Good analysis, I agree with this strategy.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/feedback",
+              "host": ["{{base_url}}"],
+              "path": ["feedback"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  { "key": "Content-Type", "value": "application/json" },
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"analysis_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"comment\": \"Good analysis, I agree with this strategy.\"\n}"
+                },
+                "url": {
+                  "raw": "{{base_url}}/feedback",
+                  "host": ["{{base_url}}"],
+                  "path": ["feedback"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"analysis_id\": 1,\n  \"user_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"rating\": null,\n  \"selected_action_short\": null,\n  \"selected_action_mid\": null,\n  \"selected_action_long\": null,\n  \"comment\": \"Good analysis, I agree with this strategy.\",\n  \"created_at\": \"2025-09-07T15:30:00.000000+07:00\",\n  \"processed\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "Submit Feedback (Rating)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analysis_id\": 2,\n  \"feedback_type\": \"rating\",\n  \"rating\": 4,\n  \"comment\": \"Good analysis but could be more detailed.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/feedback",
+              "host": ["{{base_url}}"],
+              "path": ["feedback"]
+            }
+          }
+        },
+        {
+          "name": "Submit Feedback (Custom Actions)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"analysis_id\": 3,\n  \"feedback_type\": \"comment\",\n  \"selected_action_short\": \"Buy on dips\",\n  \"selected_action_mid\": \"Hold for 3-6 months\",\n  \"selected_action_long\": \"Monitor earnings reports\",\n  \"comment\": \"I prefer these custom actions over the AI suggestions.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/feedback",
+              "host": ["{{base_url}}"],
+              "path": ["feedback"]
+            }
+          }
+        },
+        {
+          "name": "Get Single Feedback",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/feedback/1",
+              "host": ["{{base_url}}"],
+              "path": ["feedback", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/feedback/1",
+                  "host": ["{{base_url}}"],
+                  "path": ["feedback", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"id\": 1,\n  \"analysis_id\": 1,\n  \"user_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"rating\": null,\n  \"selected_action_short\": null,\n  \"selected_action_mid\": null,\n  \"selected_action_long\": null,\n  \"comment\": \"Good analysis, I agree with this strategy.\",\n  \"created_at\": \"2025-09-07T15:30:00.000000+07:00\",\n  \"processed\": false\n}"
+            }
+          ]
+        },
+        {
+          "name": "List Feedback for Analysis",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/analysis/1/feedback",
+              "host": ["{{base_url}}"],
+              "path": ["analysis", "1", "feedback"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/analysis/1/feedback",
+                  "host": ["{{base_url}}"],
+                  "path": ["analysis", "1", "feedback"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"analysis_id\": 1,\n    \"user_id\": 1,\n    \"feedback_type\": \"vote\",\n    \"vote\": \"agree\",\n    \"rating\": null,\n    \"selected_action_short\": null,\n    \"selected_action_mid\": null,\n    \"selected_action_long\": null,\n    \"comment\": \"Good analysis, I agree with this strategy.\",\n    \"created_at\": \"2025-09-07T15:30:00.000000+07:00\",\n    \"processed\": false\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Mark Feedback as Processed",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/feedback/1/mark_processed",
+              "host": ["{{base_url}}"],
+              "path": ["feedback", "1", "mark_processed"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/feedback/1/mark_processed",
+                  "host": ["{{base_url}}"],
+                  "path": ["feedback", "1", "mark_processed"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"Feedback marked as processed\"\n}"
+            }
+          ]
         }
-      }
+      ]
     },
     {
-      "name": "List Analyses for News",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8000/news/1/analysis",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["news", "1", "analysis"]
+      "name": "News & Analysis",
+      "item": [
+        {
+          "name": "List Analyses for News",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/news/1/analysis",
+              "host": ["{{base_url}}"],
+              "path": ["news", "1", "analysis"]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{base_url}}/news/1/analysis",
+                  "host": ["{{base_url}}"],
+                  "path": ["news", "1", "analysis"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "[\n  {\n    \"id\": 1,\n    \"news_id\": 1,\n    \"sentiment\": \"neutral\",\n    \"action_short\": \"Hold current positions\",\n    \"action_mid\": \"Monitor market sentiment\",\n    \"action_long\": \"Review portfolio allocation\",\n    \"model_version\": \"t5-small-v1.0\",\n    \"created_at\": \"2025-09-07T15:20:00.000000+07:00\"\n  }\n]"
+            }
+          ]
         }
-      }
+      ]
     },
     {
-      "name": "Get Feedback by ID",
-      "request": {
-        "method": "GET",
-        "url": {
-          "raw": "http://localhost:8000/feedback/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "8000",
-          "path": ["feedback", "1"]
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Root Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/",
+              "host": ["{{base_url}}"],
+              "path": [""]
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/",
+                  "host": ["{{base_url}}"],
+                  "path": [""]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                { "key": "Content-Type", "value": "application/json" }
+              ],
+              "cookie": [],
+              "body": "{\n  \"message\": \"FinBrief API is running\"\n}"
+            }
+          ]
         }
-      }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ]
 }

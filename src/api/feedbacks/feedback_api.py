@@ -33,7 +33,7 @@ import os
 from fastapi import FastAPI, HTTPException, Depends, status
 from pydantic import BaseModel, Field, validator
 from sqlalchemy.orm import sessionmaker
-from ..auth.auth_api import get_current_user
+from src.api.auth.auth_api import get_current_user
 
 # Import existing DB models and init function
 from src.database.models_migration import (
