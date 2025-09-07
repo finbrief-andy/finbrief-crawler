@@ -6,7 +6,7 @@ Combines Authentication and Feedback APIs
 
 import os
 import sys
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
 
 import jwt
@@ -15,6 +15,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
 from pydantic import BaseModel, Field, validator
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy import desc, and_
 import uvicorn
 
 # Import existing DB models and init function
@@ -24,9 +25,13 @@ from src.database.models_migration import (
     Analysis,
     Feedback,
     User,
+    Strategy,
     ActionEnum,
     FeedbackTypeEnum,
     VoteEnum,
+    StrategyHorizonEnum,
+    MarketEnum,
+    AssetTypeEnum,
 )
 
 # Init DB engine (reads DATABASE_URI env var or default)
@@ -56,7 +61,7 @@ class UserResponse(BaseModel):
     email: str
     created_at: datetime
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class Token(BaseModel):
     access_token: str
@@ -104,7 +109,7 @@ class FeedbackResponse(BaseModel):
     processed: bool
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class AnalysisResponse(BaseModel):
     id: int
@@ -117,7 +122,24 @@ class AnalysisResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+class StrategyResponse(BaseModel):
+    id: int
+    horizon: str
+    market: str
+    asset_focus: Optional[str]
+    strategy_date: datetime
+    title: str
+    summary: str
+    key_drivers: List[str]
+    action_recommendations: List[Dict[str, Any]]
+    confidence_score: Optional[float]
+    generated_by: Optional[str]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 # -----------------
 # Helpers
@@ -262,6 +284,103 @@ def mark_feedback_processed(feedback_id: int, db=Depends(get_db)):
     return {"status": "ok", "feedback_id": feedback_id}
 
 # -----------------
+# Strategy Endpoints
+# -----------------
+@app.get("/strategy/{horizon}", response_model=StrategyResponse)
+def get_latest_strategy(horizon: str, market: str = "global", db=Depends(get_db)):
+    """Get the latest strategy for a given horizon and market"""
+    try:
+        horizon_enum = StrategyHorizonEnum[horizon.lower()]
+        market_enum = MarketEnum[market.lower()]
+    except KeyError:
+        raise HTTPException(status_code=400, detail="Invalid horizon or market")
+    
+    strategy = db.query(Strategy).filter(
+        and_(
+            Strategy.horizon == horizon_enum,
+            Strategy.market == market_enum
+        )
+    ).order_by(desc(Strategy.strategy_date)).first()
+    
+    if not strategy:
+        raise HTTPException(status_code=404, detail=f"No {horizon} strategy found for {market} market")
+    
+    return strategy
+
+@app.get("/strategies", response_model=List[StrategyResponse])
+def list_strategies(market: str = "global", limit: int = 10, db=Depends(get_db)):
+    """List recent strategies for a market, grouped by horizon"""
+    try:
+        market_enum = MarketEnum[market.lower()]
+    except KeyError:
+        raise HTTPException(status_code=400, detail="Invalid market")
+    
+    strategies = db.query(Strategy).filter(
+        Strategy.market == market_enum
+    ).order_by(desc(Strategy.strategy_date)).limit(limit).all()
+    
+    return strategies
+
+@app.post("/strategy/generate", response_model=Dict[str, Any])
+def generate_new_strategies(market: str = "global", 
+                          horizons: List[str] = None, 
+                          current_user: User = Depends(get_current_user),
+                          db=Depends(get_db)):
+    """Generate new strategies for specified horizons and market (admin only)"""
+    if current_user.role.value not in ["admin", "system"]:
+        raise HTTPException(status_code=403, detail="Only admins can generate strategies")
+    
+    try:
+        market_enum = MarketEnum[market.lower()]
+    except KeyError:
+        raise HTTPException(status_code=400, detail="Invalid market")
+    
+    from src.services.strategy_generator import StrategyGenerator
+    generator = StrategyGenerator()
+    
+    results = {}
+    target_horizons = horizons or ["daily", "weekly", "monthly", "yearly"]
+    
+    for horizon_str in target_horizons:
+        try:
+            horizon_enum = StrategyHorizonEnum[horizon_str.lower()]
+            strategy = generator.create_strategy(db, horizon_enum, market_enum)
+            if strategy:
+                results[horizon_str] = {
+                    "id": strategy.id,
+                    "title": strategy.title,
+                    "created_at": strategy.created_at.isoformat()
+                }
+        except KeyError:
+            results[horizon_str] = {"error": "Invalid horizon"}
+        except Exception as e:
+            results[horizon_str] = {"error": str(e)}
+    
+    return {
+        "market": market,
+        "generated_strategies": results,
+        "total_generated": len([r for r in results.values() if "id" in r])
+    }
+
+@app.get("/strategy/{horizon}/history", response_model=List[StrategyResponse])
+def get_strategy_history(horizon: str, market: str = "global", limit: int = 7, db=Depends(get_db)):
+    """Get historical strategies for a given horizon"""
+    try:
+        horizon_enum = StrategyHorizonEnum[horizon.lower()]
+        market_enum = MarketEnum[market.lower()]
+    except KeyError:
+        raise HTTPException(status_code=400, detail="Invalid horizon or market")
+    
+    strategies = db.query(Strategy).filter(
+        and_(
+            Strategy.horizon == horizon_enum,
+            Strategy.market == market_enum
+        )
+    ).order_by(desc(Strategy.strategy_date)).limit(limit).all()
+    
+    return strategies
+
+# -----------------
 # Root endpoint
 # -----------------
 @app.get("/")
@@ -272,6 +391,7 @@ def read_root():
         "endpoints": {
             "auth": ["/auth/signup", "/auth/login", "/auth/me"],
             "feedback": ["/feedback", "/analysis/{analysis_id}/feedback", "/news/{news_id}/analysis", "/feedback/{feedback_id}"],
+            "strategy": ["/strategy/{horizon}", "/strategies", "/strategy/generate", "/strategy/{horizon}/history"],
             "docs": "/docs"
         }
     }

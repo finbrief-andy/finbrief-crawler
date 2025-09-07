@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Optional, Dict, Any
-from src.database.models_migration import MarketEnum
+from src.database.models_migration import MarketEnum, AssetTypeEnum
 
 
 @dataclass
@@ -18,7 +18,15 @@ class NewsItem:
     published_at: datetime
     source: str
     market: MarketEnum
-    metadata: Dict[str, Any]  # Source-specific metadata
+    asset_type: AssetTypeEnum = AssetTypeEnum.stocks
+    tickers: List[str] = None
+    metadata: Dict[str, Any] = None  # Source-specific metadata
+    
+    def __post_init__(self):
+        if self.tickers is None:
+            self.tickers = []
+        if self.metadata is None:
+            self.metadata = {}
 
 
 class BaseNewsAdapter(ABC):

@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import List, Dict, Any
 
 from src.crawlers.base_adapter import BaseNewsAdapter, NewsItem
-from src.database.models_migration import MarketEnum
+from src.database.models_migration import MarketEnum, AssetTypeEnum
 
 
 class VnExpressAdapter(BaseNewsAdapter):
@@ -57,6 +57,15 @@ class VnExpressAdapter(BaseNewsAdapter):
         else:
             published_at = datetime.utcnow()
         
+        # Basic asset type detection for Vietnamese news
+        text = f"{headline} {content_raw}".lower()
+        asset_type = AssetTypeEnum.stocks  # Default
+        
+        if any(word in text for word in ["vàng", "gold", "kim loại quý"]):
+            asset_type = AssetTypeEnum.gold
+        elif any(word in text for word in ["bất động sản", "nhà đất", "căn hộ"]):
+            asset_type = AssetTypeEnum.real_estate
+        
         return NewsItem(
             headline=headline,
             content_raw=content_raw,
@@ -64,5 +73,7 @@ class VnExpressAdapter(BaseNewsAdapter):
             published_at=published_at,
             source=self.source_name,
             market=self.market,
+            asset_type=asset_type,
+            tickers=[],  # Could extract VN tickers if needed
             metadata=raw_item  # Keep original RSS data as metadata
         )

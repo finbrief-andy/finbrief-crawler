@@ -43,7 +43,10 @@ class AnalysisProcessor:
             content_raw=news_item.content_raw,
             content_summary=content_summary,
             content_hash=content_hash,
-            market=news_item.market  # SQLAlchemy will handle enum conversion
+            market=news_item.market,  # SQLAlchemy will handle enum conversion
+            asset_type=getattr(news_item, 'asset_type', None),
+            tickers=str(getattr(news_item, 'tickers', [])),  # Convert to JSON string for SQLite compatibility
+            tags=getattr(news_item, 'metadata', {})
         )
         
         session.add(news)

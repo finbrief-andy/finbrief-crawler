@@ -11,8 +11,11 @@ from src.database.models_migration import init_db_and_create
 from src.crawlers.base_adapter import BaseNewsAdapter
 from src.crawlers.processors.nlp_processor import NLPProcessor
 from src.crawlers.processors.analysis_processor import AnalysisProcessor
+from src.services.vector_store import get_vector_store
 from src.crawlers.adapters.finnhub_adapter import FinnhubAdapter
 from src.crawlers.adapters.vnexpress_adapter import VnExpressAdapter
+from src.crawlers.adapters.cafef_adapter import CafeFAdapter
+from src.crawlers.adapters.gold_adapter import GoldPriceAdapter, RealEstateNewsAdapter
 
 
 class UnifiedNewsPipeline:
@@ -26,6 +29,7 @@ class UnifiedNewsPipeline:
         # Initialize processors
         self.nlp_processor = NLPProcessor()
         self.analysis_processor = AnalysisProcessor()
+        self.vector_store = get_vector_store()
         
         logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     
@@ -69,6 +73,11 @@ class UnifiedNewsPipeline:
                     )
                     logging.info(f"Stored analysis id={analysis.id} (sentiment={sentiment_result['sentiment']})")
                     
+                    # Add to vector store for semantic search
+                    if self.vector_store.is_available():
+                        self.vector_store.add_news_embedding(news)
+                        self.vector_store.add_analysis_embedding(analysis)
+                    
                     inserted += 1
                     time.sleep(0.2)  # Be polite to avoid overwhelming resources
                     
@@ -97,7 +106,10 @@ class UnifiedNewsPipeline:
         # Available source adapters
         available_adapters = {
             'finnhub': FinnhubAdapter,
-            'vnexpress': VnExpressAdapter
+            'vnexpress': VnExpressAdapter,
+            'cafef': CafeFAdapter,
+            'gold_api': GoldPriceAdapter,
+            'real_estate': RealEstateNewsAdapter
         }
         
         # Determine which sources to process

@@ -4,11 +4,26 @@ from sqlalchemy import (
     Enum as SAEnum, ForeignKey, func, UniqueConstraint, text
 )
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
+from sqlalchemy import JSON
 from sqlalchemy.dialects.postgresql import JSONB, ARRAY
 import enum
 import os
 
 Base = declarative_base()
+
+def get_json_type(engine_url=None):
+    """Get appropriate JSON type based on database"""
+    if engine_url and "postgresql" in engine_url:
+        from sqlalchemy.dialects.postgresql import JSONB
+        return JSONB
+    return JSON
+
+def get_array_type(engine_url=None):
+    """Get appropriate array type based on database"""
+    if engine_url and "postgresql" in engine_url:
+        from sqlalchemy.dialects.postgresql import ARRAY
+        return ARRAY(Text)
+    return Text  # Store as JSON string for SQLite
 
 # ------------------------
 # Enums
@@ -50,6 +65,17 @@ class MarketEnum(enum.Enum):
     vn = "vn"
     global_market = "global"  # Database stores as 'global', Python uses global_market
 
+class StrategyHorizonEnum(enum.Enum):
+    daily = "daily"
+    weekly = "weekly"
+    monthly = "monthly"
+    yearly = "yearly"
+
+class AssetTypeEnum(enum.Enum):
+    stocks = "stocks"
+    gold = "gold"
+    real_estate = "real_estate"
+
 # ------------------------
 # Tables
 # ------------------------
@@ -61,7 +87,7 @@ class User(Base):
     password_hash = Column(String(255), nullable=False)
     display_name = Column(String(255))
     role = Column(SAEnum(RoleEnum), default=RoleEnum.user, nullable=False)
-    user_metadata = Column(JSONB, nullable=True)
+    user_metadata = Column(JSON, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     feedbacks = relationship("Feedback", back_populates="user")
@@ -81,9 +107,10 @@ class News(Base):
     content_summary = Column(Text)
     language = Column(String(10), default="vi")
     content_hash = Column(String(128), index=True)  # sha256 for dedupe
-    tickers = Column(ARRAY(String))                 # e.g. ['VIC', 'VCB']
-    tags = Column(JSONB)                            # flexible tags/entities
-    source_meta = Column(JSONB)                     # original source metadata
+    tickers = Column(Text)                          # JSON string of tickers for SQLite compatibility
+    asset_type = Column(SAEnum(AssetTypeEnum), default=AssetTypeEnum.stocks, nullable=False)  # Primary asset focus
+    tags = Column(JSON)                             # flexible tags/entities
+    source_meta = Column(JSON)                      # original source metadata
     is_archived = Column(Boolean, default=False)
     archived_at = Column(DateTime(timezone=True))
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
@@ -112,12 +139,40 @@ class Analysis(Base):
     action_long = Column(SAEnum(ActionEnum))
     action_confidence = Column(Float)     # 0..1
     rationale = Column(Text)              # model/human explanation
-    raw_output = Column(JSONB)            # raw model JSON output for trace
+    raw_output = Column(JSON)             # raw model JSON output for trace
     is_latest = Column(Boolean, default=True, nullable=False)
 
     news = relationship("News", back_populates="analyses")
     feedbacks = relationship("Feedback", back_populates="analysis")
     creator = relationship("User", foreign_keys=[created_by])
+
+
+class Strategy(Base):
+    __tablename__ = "strategies"
+
+    id = Column(Integer, primary_key=True)
+    horizon = Column(SAEnum(StrategyHorizonEnum), nullable=False, index=True)
+    market = Column(SAEnum(MarketEnum), nullable=False, default=MarketEnum.global_market)
+    asset_focus = Column(SAEnum(AssetTypeEnum), nullable=True)  # Optional focus on specific asset
+    strategy_date = Column(DateTime(timezone=True), nullable=False, index=True)  # The date this strategy applies to
+    
+    # Core strategy content
+    title = Column(String(500), nullable=False)
+    summary = Column(Text, nullable=False)  # TL;DR section
+    key_drivers = Column(JSON, nullable=False)   # Array of 3-5 key market drivers
+    action_recommendations = Column(JSON, nullable=False)   # Structured recommendations
+    confidence_score = Column(Float)  # 0-1 confidence in this strategy
+    
+    # Source tracking
+    source_analysis_ids = Column(Text, nullable=True)  # JSON string of analysis IDs for SQLite compatibility
+    generated_by = Column(String(255))  # Model name/version or "human"
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
+    updated_at = Column(DateTime(timezone=True), onupdate=func.now())
+    
+    # Ensure one strategy per horizon per market per date
+    __table_args__ = (
+        UniqueConstraint('horizon', 'market', 'strategy_date', name='uq_strategy_horizon_market_date'),
+    )
 
 
 class Feedback(Base):
@@ -146,25 +201,39 @@ class Feedback(Base):
 def init_db_and_create(uri=None):
     if uri is None:
         uri = os.getenv("DATABASE_URI", "postgresql://postgres:postgres@localhost:5432/finbrief")
+    
     engine = create_engine(uri)
     Base.metadata.create_all(engine)
 
-    # Create recommended Postgres indexes not expressed in SQLAlchemy models (full-text / GIN)
+    # Create recommended indexes (PostgreSQL-specific ones only for PostgreSQL)
     with engine.connect() as conn:
-        # Enable pg_trgm if you want fuzzy matching (optional)
-        conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
-        # GIN index for tickers array
-        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_tickers_gin ON news USING GIN (tickers);"))
-        # GIN index for tags jsonb
-        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_tags_gin ON news USING GIN (tags);"))
-        # Full-text search index on headline + content_summary
-        conn.execute(text(
-            "CREATE INDEX IF NOT EXISTS idx_news_search ON news USING GIN (to_tsvector('simple', coalesce(headline,'') || ' ' || coalesce(content_summary,'')));"
-        ))
-        # Index for content_hash for dedupe fast lookup
+        is_postgres = "postgresql" in str(engine.url)
+        
+        if is_postgres:
+            # PostgreSQL-specific extensions and indexes
+            conn.execute(text("CREATE EXTENSION IF NOT EXISTS pg_trgm;"))
+            # Convert JSON columns to JSONB for better performance
+            conn.execute(text("ALTER TABLE news ALTER COLUMN tags TYPE jsonb USING tags::jsonb;"))
+            conn.execute(text("ALTER TABLE news ALTER COLUMN source_meta TYPE jsonb USING source_meta::jsonb;"))
+            conn.execute(text("ALTER TABLE users ALTER COLUMN user_metadata TYPE jsonb USING user_metadata::jsonb;"))
+            conn.execute(text("ALTER TABLE strategies ALTER COLUMN key_drivers TYPE jsonb USING key_drivers::jsonb;"))
+            conn.execute(text("ALTER TABLE strategies ALTER COLUMN action_recommendations TYPE jsonb USING action_recommendations::jsonb;"))
+            
+            # GIN indexes for JSONB columns (PostgreSQL only)
+            conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_tags_gin ON news USING GIN (tags);"))
+            conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_source_meta_gin ON news USING GIN (source_meta);"))
+            conn.execute(text("CREATE INDEX IF NOT EXISTS idx_strategies_key_drivers_gin ON strategies USING GIN (key_drivers);"))
+            
+            # Full-text search index (PostgreSQL only)
+            conn.execute(text(
+                "CREATE INDEX IF NOT EXISTS idx_news_search ON news USING GIN (to_tsvector('english', coalesce(headline,'') || ' ' || coalesce(content_summary,'')));"
+            ))
+        
+        # Common indexes that work on both PostgreSQL and SQLite
         conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_content_hash ON news (content_hash);"))
-        # Index on published_at already created via Column(index=True), but ensure btree index exists
         conn.execute(text("CREATE INDEX IF NOT EXISTS idx_news_published_at ON news (published_at);"))
+        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_strategies_horizon_market ON strategies (horizon, market);"))
+        conn.execute(text("CREATE INDEX IF NOT EXISTS idx_strategies_strategy_date ON strategies (strategy_date);"))
 
     print("✅ Tables + recommended indexes are created.")
     return engine

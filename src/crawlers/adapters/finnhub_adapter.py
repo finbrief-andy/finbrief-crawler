@@ -8,7 +8,7 @@ from datetime import datetime
 from typing import List, Dict, Any
 
 from src.crawlers.base_adapter import BaseNewsAdapter, NewsItem
-from src.database.models_migration import MarketEnum
+from src.database.models_migration import MarketEnum, AssetTypeEnum
 
 
 class FinnhubAdapter(BaseNewsAdapter):
@@ -56,5 +56,7 @@ class FinnhubAdapter(BaseNewsAdapter):
             published_at=published_at,
             source=source,
             market=self.market,
+            asset_type=AssetTypeEnum.stocks,  # Finnhub primarily provides stock news
+            tickers=[],  # Could extract tickers from content if needed
             metadata=raw_item  # Keep original data as metadata
         )
