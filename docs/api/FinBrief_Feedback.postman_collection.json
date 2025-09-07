@@ -1,0 +1,67 @@
+{
+  "info": {
+    "name": "FinBrief Feedback API",
+    "_postman_id": "fb-demo-collection",
+    "description": "Test feedback flow for FinBrief",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Submit Feedback",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"analysis_id\": 1,\n  \"user_id\": 1,\n  \"feedback_type\": \"vote\",\n  \"vote\": \"agree\",\n  \"comment\": \"This action makes sense.\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/feedback",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["feedback"]
+        }
+      }
+    },
+    {
+      "name": "List Feedback for Analysis",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/analysis/1/feedback",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["analysis", "1", "feedback"]
+        }
+      }
+    },
+    {
+      "name": "List Analyses for News",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/news/1/analysis",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["news", "1", "analysis"]
+        }
+      }
+    },
+    {
+      "name": "Get Feedback by ID",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/feedback/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8000",
+          "path": ["feedback", "1"]
+        }
+      }
+    }
+  ]
+}

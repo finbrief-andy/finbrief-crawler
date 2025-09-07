@@ -1,0 +1,292 @@
+input,output
+"Headline: The Fed thought it was seeing a ‘solid’ jobs market. Turns out that was just an illusion.
+Summary: Federal Reserve chief Jerome Powell said “the labor market’s solid — historically low unemployment” just five weeks ago.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Forget Salesforce and Adobe. This under-the-radar software stock is winning in the AI era.
+Summary: Guidewire is quietly bringing AI to an overlooked corner of the market: insurance providers.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Jim Cramer highlights 6 stocks that stand to benefit from Fed rate cuts
+Summary: The Investing Club holds its ""Morning Meeting"" every weekday at 10:20 a.m. ET.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Broadcom is starting to look ‘eerily reminiscent’ of Nvidia. Both stocks are feeling the impact.
+Summary: Some analysts now think the company’s AI revenue will double next year. The company said it added a fourth customer for its custom chips.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Powerball jackpot nears $2 billion—here's the after-tax payout in every U.S. state
+Summary: The jackpot has soared to $1.7 billion after 42 straight drawings without a winner.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Jim Cramer says this is the stock to buy after the weak August jobs report
+Summary: The call came after a weak August jobs report. The 10-year treasury yield slid to its weakest levels since April 7.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Massive Powerball jackpot means big boost for DraftKings
+Summary: Powerball's $1.7 billion jackpot is fueling triple-digit growth in ticket sales on DraftKings.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: You’ve already spent big bucks on a Carnival Cruise package — so would you pay extra for doughnuts?
+Summary: Some passengers say cruise lines are nickel-and-diming them with surcharges. Carnival now charging $3 to $8 extra for doughnuts and sweet treats.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: I pulled $90K out of my 401(k) and put it in precious metals. Is this the best way to save for retirement?
+Summary: “We have seen growth that we did not see in the market,” he says. “We’ve seen growth in our business.”
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: S&P 500 is climbing a ‘wall of worry’ — but Nvidia is now a real concern
+Summary: Gold is a favorite of investors, but may have peaked for now. Stock-market leader and investor favorite may have peak. Gold flashes a ‘buy’ signal.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Weight loss has become the hottest new Chinese consumer craze
+Summary: A wellness boom is reshaping China, from gyms and diet apps to new injectable drugs.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Jim Cramer's top 10 things to watch in the stock market Friday
+Summary: Futures rise after soft August jobs report raises expectations of a September rate cut. Stock futures rose after a soft August Jobs report raised expectations for a SeptemberRate cut.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: It’s not just Lisa Cook in hot water over second home. U.K. deputy prime minister quits over tax issue.
+Summary: Angela Rayner reportedly failed to properly pay stamp duty on second home. Rayner's second home was bought for $1.5 million in 2007.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Jobs report shows meager 22,000 gain in August and unemployment hits nearly 4-year high. Weak hiring tees up Fed rate cut.
+Summary: The economy added a lackluster 22,000 new jobs in August. The unemployment rate rose to a nearly four-year high.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Yieldstreet tell investors in $89 million worth of marine loans to expect losses
+Summary: Yieldstreet has lost $78 million in real estate investments, according to a CNBC report. The report follows a similar report last month into Yieldstreet's investments.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Treasury bonds aren’t the safe haven they’ve been in the past — and taxpayers will pay a price
+Summary: The U.S. government faces hundreds of billions of dollars in additional interest payments. The interest payments are part of a larger plan to pay down the nation's debt.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Elon Musk could be paid $1 trillion if he makes Tesla ‘the most valuable company in history’
+Summary: Tesla proposes a $1 trillion pay package for Elon Musk, if can stay focused on adding $7.5 trillion to the company's value.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: S&P 500 changes are due out soon — and this could be a big update
+Summary: AppLovin, Reddit and Robinhood are candidates to join the index at the quarterly rebalance. Strategy, formerly known as MicroStrategy is newly eligible for inclusion.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: ‘Job hugging’ in this economy? Here’s how it could cost you.
+Summary: Workers clinging to their jobs may be hesitant to job-hop in search of a bigger raise. But they won't necessarily be rewarded for their company loyalty, either.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: ‘Technology is the new plumbing’ in senior housing — which is a huge opportunity for Apple, Netflix and Peloton
+Summary: Consumer expectations, technology adoption and market competition are shifting as aging adults get more tech-savvy and demand connectivity.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Watch out, retirees: President Trump doesn’t understand interest rates
+Summary: Yet he may soon have control of the Fed.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Trump promised ‘no tax on Social Security’ in his One Big Beautiful Bill Act. This Democratic bill could actually do it.
+Summary: A new legislative proposal would permanently eliminate taxes on Social Security benefits. It would also expand payroll taxes to earnings above $250,000.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Broadcom's soaring stock is getting cheaper. Here's the math on how that's possible
+Summary: The most sustainable type of stock rallies are those rooted in upwards earnings revisions. Broadcom has just that.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Lululemon’s style refresh is met with Wall Street skepticism. ‘It’s going to get worse,’ analyst says.
+Summary: The retailer's gym- and yoga-clothing revamp isn't expected to take hold until the spring of 2026 or later.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Why the AI bubble in the stock market might still have a long way to run
+Summary: A live Q&A to answer your real-estate questions. Plus: One way to become a trillionaire.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Looking through to 2027, UBS upgrades ‘quality compounder’ ASML to buy
+Summary: UBS analysts recommend investors focus on the 20% eps CAGR ASML is expected to deliver between 2027 and 2030.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Starbucks wants its cafes to be more welcoming — and accessible. Take a look at a recent renovation
+Summary: Starbucks is giving 1,000 of its cafes makeovers by the end of 2026.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Nvidia stock has been in something of a rut. One analyst says the price could double.
+Summary: Analyst says Wall Street is underestimating future data-center revenue for chip giant. Chip giant is expected to report record quarterly results this week.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: My friend and her husband own property. How do her kids get their fair share?
+Summary: “They are joint tenants with the right of survivorship.”
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Star Island mansion once owned by Rosie O’Donnell sells for $36 million after huge price drop
+Summary: Rosie O'Donnell's former Miami home has sold for a staggering $36 million to the billionaire founder of Rockstar Energy Drink.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: N.Y. townhouse of late Ivana Trump gets another price cut: It’s now listed for $17.9 million
+Summary: The late Ivana Trump’s residence has taken yet another price decrease, with it now listed for $17.9 million. That's a staggering $8.6 million difference from its original listing price.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Crunch time for Argentina as local elections this weekend represent referendum on Milei
+Summary:  markets need reassurance of continuity in Milei’s reform agenda. A lot is riding  on Sunday’S provincial elections.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: GST and income tax cuts may lure global funds back to India
+Summary: Urban wage growth has trailed nominal GDP for most of the past two decades. Momentum stalled after peaking in 2022.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Palo Alto Networks CEO says the enterprise may not welcome agentic AI browsers
+Summary: Palo Alto Netwoks CEO Nikesh Arora described potential challenges that come with browsers run by agentic AI.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Dallas Cowboys owner Jerry Jones says Micah Parsons trade was 'based on mathematics'
+Summary: The Dallas Cowboys are valued at a record $12.5 billion. The team kicks off the 2025-2026 season.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: S&P 500 books record as falling rates bring ‘relief’ — but beware the ‘tale of two bond markets’
+Summary: Interest rates in the bond market have retreated this week as investors anticipate the Fed may soon cut rates. But their recent behavior also suggests worries over risks such as inflation.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Internal NFL ticket report reveals 49ers at top and Titans at bottom
+Summary: The 35-page report includes data such as tickets sold and gross general admission ticket prices for the preseason and regular season.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Broadcom sees 63% growth in AI sales and gives a rosy forecast. Why isn’t its stock rising more?
+Summary: The company’s third-quarter results came in atop the Wall Street consensus — but expectations were already high on its AI revenue outlook.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: The S&P 500 must stay above 6,400 for the rally to continue — after August jobs report rattles market, strategist says
+Summary: U.S. stocks were struggling in early-afternoon trading Friday. The latest jobs data for August helped revive investors’ worries about a slowing labor market.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: 5 ways the Trump administration could use declaring a national housing emergency to help home buyers
+Summary: The Trump administration is considering declaring a housing emergency. Here's what that could mean, and how it could impact the average renter and home buyer.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Costco’s monthly sales are on a roll, thanks to surge in online orders
+Summary: Costco puts to rest, at least for now, concerns about a sales slowdown. Costco: We are seeing strong demand for our products and services.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Trump’s ‘Apprentice’-style competition for Fed chief starts now. Here’s what to know.
+Summary: The Treasury chief’s prominent role in the process for selecting the successor to current Fed Chair Jerome Powell isn’t that remarkable. Other aspects of the process now under way are unusual, according to Fed watchers.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Lululemon’s stock slides as retailer cuts outlook amid ‘industry-wide challenges’
+Summary: Shares of Lululemon Athletica Inc. tumbled after hours on Thursday. Yoga-wear maker cut its full-year outlook, citing costs related to U.S. tariffs.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: ‘Cult stock’ Opendoor has hit a three-year high. And this is why.
+Summary: Noted Opendoor bull Eric Jackson is keeping the stock firmly in the spotlight. Jackson: ""I think the market is going to continue to do well""
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Lululemon shares plunge as earnings guidance falls well short of estimates
+Summary: Lululemon reported second-quarter earnings Thursday. It beat quarterly earnings and revenue estimates but issued a weak 2025 outlook.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Trump asks Supreme Court to let him fire FTC Commissioner Rebecca Slaughter
+Summary: President Donald Trump removed two Democratic commissioners from their posts at the Federal Trade Commission in March.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Boeing hires replacement workers as defense unit strike enters second month
+Summary: Workers have been on strike since Aug. 4 without a new contract agreement. Those workers have been without a contract agreement for more than a month.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: AMD’s stock has shined this year, but have expectations gotten too high?
+Summary: The chip maker’s progress with its AI accelerators looks to be slowing down, Seaport analysts say. That could make it harder for the company to meet Wall Street’S high expectations.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Why it’s getting easier for active managers to beat the S&P 500 in 2025
+Summary: The share of active large-cap managers beating the S&P 500 rose. The number of stocks outperforming the index has also increased.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Honeywell's quantum computing firm inches closer to a pivotal step for investors
+Summary: Quantinuum has raised another $600 million in funding at an approximately $10 billion valuation.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Las Vegas travel is slumping. What does it mean for the rest of the U.S.?
+Summary: Las Vegas has seen visitation decline for seven consecutive months. The most recent report from July showed a 12% decline year over year.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Paramount mandates 5-day-a-week return to office ahead of major cost cuts
+Summary:  Paramount told employees Thursday that they will be expected to work in the office five days a week starting January 5, 2026.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: It will take a doozy of a jobs report to derail investor expectations for a September rate cut
+Summary: Friday’s August jobs report is always going to be the main event. Investors are gearing up for what was always going be the week's main event: the jobs report.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Behind the pop in Amazon shares, plus Goldman Sachs makes another push into alts
+Summary: The Investing Club releases the Homestretch every weekday. It's an actionable afternoon update just in time for the last hour of trading.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: NFL fans can stream all games this season for the first time — and could end up paying less to do so
+Summary: For the first time this season, almost all NFL games can be watched on streaming platforms. NFL games have long been the bastion of traditional linear TV.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: From bad to worse? Another big jobs report is coming up — and it probably won’t look good either.
+Summary: The jobs report is coming out in just a few more days. And the news probably won’t be good.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Senate seeks to rein in stock tokenization in latest crypto bill draft
+Summary: Crypto companies like Coinbase and Ripple are pushing for the passage of a market structure bill.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Cramer's week ahead: New economic data and Apple's latest iPhone
+Summary: CNBC's Jim Cramer walked investors through next week on Wall Street. Cramer: ""It's going to be a very, very good week for the markets""
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Kenvue fights back against Tylenol safety concerns as its stock tumbles
+Summary: RFK Jr. will release a report linking the use of acetaminophen during pregnancy to autism. Kenvue rushed to the defense of Tylenol.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: How you can still get a refund for a delayed or canceled flight even as Trump scraps Biden’s airline compensation proposal
+Summary: The Trump administration this week said it will reverse plans to require airlines to compensate passengers for lengthy delays and cancellations. Consumer advocates say the move is likely the first of many to weaken protections for travelers.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: OPEC+ meets this weekend at a precarious time for crude oil. Here’s what’s at stake.
+Summary: OPEC+ considers a second round of production hikes this weekend. Economic and geopolitical backdrop dimmed prospects for demand and boosted potential for supply surplus.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Why AMD’s stock is seeing one of the worst drops in the S&P 500 today
+Summary:  AMD offers a GPU alternative to Nvidia, but it seems like hyperscalers are paying more attention to custom chips made by Broadcom.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Mystery of former Federal Reserve Governor Kugler's resignation deepens as real estate records raise new questions
+Summary: The mystery surrounding former Federal Reserve Governor Adriana Kugler's resignation has gained new urgency.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: ‘This is to gain control of the most powerful agency in government’: A look at Treasury Secretary Bessent’s essay against the Fed
+Summary: Bessent wants to set up an independent review that will result in a much smaller central bank.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Hollywood turns to video games to bring fresh IP to the big screen
+Summary: Video games have been around for decades, but they've only become more popular in the last few years.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Bond yields tumble as weak jobs report raises chances of a half-point Fed rate cut
+Summary: Longer-term Treasury yields look like a safety play for the first time since April’s market shock.
+Sentiment: neutral","Short=NONE, Mid=NONE, Long=NONE"
+"Headline: Wall Street’s dilemma: How Fed rate cut hopes clashed with slowing jobs growth
+Summary: The S&P 500 and Nasdaq both briefly hit record intraday highs Friday before tumbling on a weaker August jobs report.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: ‘Fun came before paying bills’: My brother-in-law is in his 70s and homeless. Are we responsible for him?
+Summary: “At one point, he was even taking items from friend’s homes when they let him stay with them,” she says.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: America is about to have a lot more senior citizens. What that means for everything from health to housing.
+Summary: America is about to have a lot more senior citizens. What that means for everything from health to housing.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: 5 facts a dermatologist wants you to know about sunscreen: Using it is just as important as brushing your teeth, he says
+Summary: There are many misconceptions about sunscreen. Here are a few facts that may surprise you from dermatologist Dr. Adam Friedman.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: 18-year-old CEO learned to code at age 7—now he has a $1.4 million-a-month AI app
+Summary: Zach Yadegari is the teenage CEO and co-founder of Cal AI. Cal AI uses AI to tell users how many calories are in a meal based on just a photo.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: 7 traits of highly successful people like Taylor Swift—they don't 'dabble in things that aren't important' to them: Harvard-trained expert
+Summary:  Economist and investor Sinéad O'Sullivan explores the traits shared by highly successful people. She cites Taylor Swift as a prime example.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Apple’s iPhone events have been unimpressive lately. Will this year be the exception?
+Summary: Some on Wall Street believe a thin new iPhone could help Apple break the pattern. The tech giant’s stock usually slumps after its big hardware reveals.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: OpenAI says spending to rise to $115 billion through 2029: Information
+Summary: OpenAI is in the process of developing its own data centre server chips and facilities to drive the technologies. The move is in an effort to control cloud server rental expenses.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Top Trump aide chosen for Federal Reserve Board on track to win approval as questions swirl about bank independence
+Summary: President Donald Trump wants to remake the board of the Federal Reserve and push the central bank to cut interest rates. A top White House adviser appeared to win the endorsement of Republican senators.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Here’s one way the Fed could lower mortgage rates almost overnight — and it’s not the rate cut Trump wants
+Summary: The Trump administration is considering declaring a national housing emergency. It could come as soon as this fall.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: This group of stocks should trounce the S&P 500, according to a veteran money manager
+Summary: U.S. stocks are trading at high valuations relative to historical averages, pointing to a long period of weak performance.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: JetBlue sees summer air-travel demand stretching into fall. Here’s how it impacts other airlines.
+Summary: Jetblue Airways sounded an optimistic note for U.S. airlines, igniting hopes that summer air-travel demand will carry over to the rest of the year.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: This restaurant stock catches a downgrade. Jim Cramer looks at level to buy it
+Summary: The Investing Club holds its ""Morning Meeting"" every weekday at 10:20 a.m. ET.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Mortgage rates drop to 11-month low, but buyers are holding back
+Summary: Mortgage rates fell over the last week as the 10-year Treasury dropped. Investors grew uncertain about the future of the U.S. economy.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Fed’s Williams says tariffs are not amplifying inflation, keeping door open for possible rate cut in September
+Summary: Williams: Fed officials must ask whether the current stance of interest rates would damage the job market unnecessarily if left in place.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: I’m single and gave my friend a wedding gift — but she didn’t get me a housewarming present. Am I wrong to feel snubbed?
+Summary: “I feel like I’ve really shown up to celebrate this person. Am I wrong to have expected a gift and wanted to feel celebrated in return?” she said.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: This airline is bringing back its $299 ‘all you can fly’ pass for a limited time: Here's what to know
+Summary:  Frontier Airlines announced its offering its GoWild! All-You-Can-Fly annual pass for unlimited domestic and international travel for 2026 and 2027.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: RFK Jr. spreads vaccine misinformation during congressional testimony
+Summary: Kennedy supports a statement made by a newly appointed member of a key government vaccine panel that mRNA vaccines pose a dangerous risk.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: I’m about to inherit a lot of money. How do I make sure my husband doesn’t get any of it?
+Summary: “We want to invest the money and play catch up with our retirement savings/funding,” he says.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: 401(k) plans are opening to private equity and crypto — but this group could put a stop to it
+Summary: The value of private equity and crypto coming to plans depends on whom you ask. Private equity, crypto and venture capital are all growing at different rates, say analysts.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Sportsbook CEOs expect record betting ahead of NFL kickoff
+Summary: The American Gaming Association estimates legal betting in the U.S. will grow by 8.5% this NFL season, to $30 billion.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Goldman Sachs buys $1 billion stake in T. Rowe Price as more banks start offering private-market investments to individuals
+Summary: Goldman Sachs and T. Rowe Price are teaming up to offer wealth and retirement clients more investment options.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: What’s dragging down Salesforce’s stock? It may be a bigger problem than AI.
+Summary: Investors are focused on the threat of AI, but bears see a more fundamental problem: a competitive and maturing market for the company's core products.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Is Credo the next hot AI stock? Its massive growth is impressing Wall Street.
+Summary: The company's July-quarter results and guidance came in above Wall Street’s expectations. Some analysts see upside for its AEC and optical offerings.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: A big part of the economy grew faster in August, ISM finds, but not because everything is A-OK.
+Summary: ISM services index hits 6-month high. Businesses aim to beat tariffs ahead of holiday season.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Can Broadcom avoid an earnings letdown like a chief rival? There's reason to believe it can
+Summary: Broadcom reports its quarterly results Thursday evening.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Gap will add beauty products to Old Navy stores later this year
+Summary: Gap is expanding into beauty at Old Navy stores. The move marks a strategic shift for the apparel retailer.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
+"Headline: Is Honeywell a quantum-computing stock now? There’s a new link to Nvidia.
+Summary: N Nvidia’s VC arm was among the participants in a recently announced capital raise for Quantinuum.Quantinuum is Honeywell's quantum-computing business.
+Sentiment: positive","Short=BUY, Mid=HOLD, Long=BUY"
+"Headline: Jim Cramer's top 10 things to watch in the stock market Thursday
+Summary: ADP report shows fewer job additions in August than expected. The ADP report showed fewer jobs additions than expected in August.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: Jobless claims rise to highest level since June, adding to concerns about labor market
+Summary: The labor market tends to weaken quickly once layoffs commence. What worries policymakers is that the labor market will weaken quickly.
+Sentiment: neutral","Short=HOLD, Mid=HOLD, Long=HOLD"
+"Headline: More people earning over $100,000 are doing their back-to-school and holiday shopping at Dollar General and Dollar Tree these days. Here’s why.
+Summary: Higher-income customers are boosting the performance of discount retailers. Dollar Tree and Dollar General are both seeing strong sales growth.
+Sentiment: negative","Short=SELL, Mid=AVOID, Long=HOLD"
