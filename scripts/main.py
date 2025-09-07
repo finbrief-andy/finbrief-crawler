@@ -144,11 +144,14 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 def get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_db)):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id: int = payload.get("sub")
-        if user_id is None:
+        user_id_str: str = payload.get("sub")
+        if user_id_str is None:
             raise HTTPException(status_code=401, detail="Invalid token")
+        user_id = int(user_id_str)
     except jwt.PyJWTError:
         raise HTTPException(status_code=401, detail="Could not validate token")
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid user ID in token")
     user = db.query(User).filter(User.id == user_id).first()
     if user is None:
         raise HTTPException(status_code=404, detail="User not found")
@@ -196,7 +199,7 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db=Depends(get_db)):
     user = db.query(User).filter(User.email == form_data.username).first()
     if not user or not verify_password(form_data.password, user.password_hash):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
-    token = create_access_token({"sub": user.id})
+    token = create_access_token({"sub": str(user.id)})
     return {"access_token": token, "token_type": "bearer"}
 
 @app.get("/auth/me", response_model=UserResponse)

@@ -1,10 +1,25 @@
 {
   "info": {
-    "name": "FinBrief API Complete Collection",
-    "_postman_id": "fb-complete-api-collection",
-    "description": "Complete FinBrief API collection with Authentication and Feedback endpoints",
+    "name": "FinBrief API Complete Collection (Auto JWT Token)",
+    "_postman_id": "fb-complete-api-collection-autotoken",
+    "description": "Complete FinBrief API collection with automatic JWT token management. The Login request automatically captures and stores the access token for use in all subsequent requests.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Collection-level pre-request script for token validation",
+          "const token = pm.collectionVariables.get('token');",
+          "if (!token && pm.request.url.toString().includes('/auth/') === false) {",
+          "    console.warn('No token found. Please run Login request first.');",
+          "}"
+        ]
+      }
+    }
+  ],
   "item": [
     {
       "name": "Authentication",
@@ -62,10 +77,12 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const jsonData = pm.response.json();",
-                  "    pm.environment.set('token', jsonData.access_token);",
-                  "    pm.collectionVariables.set('token', jsonData.access_token);",
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access_token) {",
+                  "   pm.collectionVariables.set(\"token\", jsonData.access_token);",
+                  "   console.log(\"Token automatically set:\", jsonData.access_token);",
+                  "} else {",
+                  "   console.warn(\"No access_token in response\");",
                   "}"
                 ],
                 "type": "text/javascript"

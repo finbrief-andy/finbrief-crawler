@@ -26,8 +26,8 @@ Main steps:
 
 5. Run API Server
 
-- Usage: `cd src/api/feedbacks && PYTHONPATH=../../.. python3 -m uvicorn feedback_api:app --reload --port 8000`
-- Starts FastAPI server for feedback collection
+- Usage: `export SECRET_KEY="finbrief-super-secret-key-12345" && PYTHONPATH=. python3 scripts/main.py`
+- Starts FastAPI server with authentication and feedback collection
 - Endpoints:
   - POST /feedback - Submit feedback for an analysis
   - GET /analysis/{analysis_id}/feedback - List feedback for an analysis
