@@ -6,7 +6,7 @@ import sys
 import os
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 def test_password_hashing():
     """Test password hashing with available libraries"""

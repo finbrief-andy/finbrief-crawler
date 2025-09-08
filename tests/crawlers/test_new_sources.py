@@ -5,7 +5,7 @@ Tests MarketWatch, Reuters, and VietStock adapters.
 """
 import sys
 import os
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from src.crawlers.adapters.marketwatch_adapter import MarketWatchAdapter
 from src.crawlers.adapters.reuters_adapter import ReutersAdapter

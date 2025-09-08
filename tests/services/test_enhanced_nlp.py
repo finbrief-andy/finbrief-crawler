@@ -9,7 +9,7 @@ import time
 from datetime import datetime
 
 # Add project root to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 def test_enhanced_nlp():
