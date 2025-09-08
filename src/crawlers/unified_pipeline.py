@@ -12,10 +12,29 @@ from src.crawlers.base_adapter import BaseNewsAdapter
 from src.crawlers.processors.nlp_processor import NLPProcessor
 from src.crawlers.processors.analysis_processor import AnalysisProcessor
 from src.services.vector_store import get_vector_store
+# Import adapters with error handling for missing dependencies
 from src.crawlers.adapters.finnhub_adapter import FinnhubAdapter
-from src.crawlers.adapters.vnexpress_adapter import VnExpressAdapter
-from src.crawlers.adapters.cafef_adapter import CafeFAdapter
 from src.crawlers.adapters.gold_adapter import GoldPriceAdapter, RealEstateNewsAdapter
+from src.crawlers.adapters.marketwatch_adapter import MarketWatchAdapter
+from src.crawlers.adapters.reuters_adapter import ReutersAdapter
+from src.crawlers.adapters.vietstock_adapter import VietStockAdapter
+
+# Optional adapters that might have missing dependencies
+try:
+    from src.crawlers.adapters.vnexpress_adapter import VnExpressAdapter
+    VNEXPRESS_AVAILABLE = True
+except ImportError as e:
+    logging.warning(f"VnExpressAdapter not available: {e}")
+    VnExpressAdapter = None
+    VNEXPRESS_AVAILABLE = False
+
+try:
+    from src.crawlers.adapters.cafef_adapter import CafeFAdapter
+    CAFEF_AVAILABLE = True
+except ImportError as e:
+    logging.warning(f"CafeFAdapter not available: {e}")
+    CafeFAdapter = None
+    CAFEF_AVAILABLE = False
 
 
 class UnifiedNewsPipeline:
@@ -103,14 +122,21 @@ class UnifiedNewsPipeline:
         Returns:
             Dict with processing statistics for each source
         """
-        # Available source adapters
+        # Available source adapters (only include if dependencies are available)
         available_adapters = {
             'finnhub': FinnhubAdapter,
-            'vnexpress': VnExpressAdapter,
-            'cafef': CafeFAdapter,
             'gold_api': GoldPriceAdapter,
-            'real_estate': RealEstateNewsAdapter
+            'real_estate': RealEstateNewsAdapter,
+            'marketwatch': MarketWatchAdapter,
+            'reuters': ReutersAdapter,
+            'vietstock': VietStockAdapter
         }
+        
+        # Add optional adapters if available
+        if VNEXPRESS_AVAILABLE:
+            available_adapters['vnexpress'] = VnExpressAdapter
+        if CAFEF_AVAILABLE:
+            available_adapters['cafef'] = CafeFAdapter
         
         # Determine which sources to process
         if sources is None:
