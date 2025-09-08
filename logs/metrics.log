@@ -1,0 +1,1 @@
+{"timestamp": "2025-09-08T14:00:03.522476", "level": "INFO", "logger": "test", "message": "Performance: test_operation completed in 0.1008s", "module": "logger", "function": "log_performance", "line": 176, "performance": {"operation": "test_operation", "duration_seconds": 0.1008, "timestamp": "2025-09-08T14:00:03.522440", "status": "success"}}

@@ -1,0 +1,144 @@
+{
+  "timestamp": "2025-09-08T14:00:03.529460",
+  "metrics": {
+    "timestamp": "2025-09-08T14:00:03.529479",
+    "counters": {
+      "news_articles_crawled_total[source=test_source]": 25,
+      "api_requests_total[endpoint=/api/test,method=GET,status=200]": 2,
+      "database_operations_total[operation=SELECT,table=test_table]": 10
+    },
+    "gauges": {
+      "memory_usage_mb[component=test_component]": 256.5
+    },
+    "timers": {
+      "crawler_duration_seconds[source=test_source]": {
+        "count": 0
+      },
+      "nlp_processing_duration_seconds[operation=sentiment,processor=test_processor]": {
+        "count": 0
+      },
+      "api_request_duration_seconds[endpoint=/api/test,method=GET]": {
+        "count": 0
+      },
+      "database_operation_duration_seconds[operation=SELECT,table=test_table]": {
+        "count": 0
+      }
+    },
+    "histograms": {
+      "nlp_text_length_characters[operation=sentiment,processor=test_processor]": {
+        "count": 0
+      }
+    }
+  },
+  "recent_points": [
+    {
+      "name": "news_articles_crawled_total",
+      "value": 25,
+      "timestamp": "2025-09-08 14:00:03.529105",
+      "labels": {
+        "source": "test_source"
+      },
+      "metric_type": "counter"
+    },
+    {
+      "name": "crawler_duration_seconds",
+      "value": 2.5,
+      "timestamp": "2025-09-08 14:00:03.529123",
+      "labels": {
+        "source": "test_source"
+      },
+      "metric_type": "timer"
+    },
+    {
+      "name": "memory_usage_mb",
+      "value": 256.5,
+      "timestamp": "2025-09-08 14:00:03.529137",
+      "labels": {
+        "component": "test_component"
+      },
+      "metric_type": "gauge"
+    },
+    {
+      "name": "nlp_processing_duration_seconds",
+      "value": 0.8,
+      "timestamp": "2025-09-08 14:00:03.529146",
+      "labels": {
+        "processor": "test_processor",
+        "operation": "sentiment"
+      },
+      "metric_type": "timer"
+    },
+    {
+      "name": "nlp_text_length_characters",
+      "value": 500,
+      "timestamp": "2025-09-08 14:00:03.529151",
+      "labels": {
+        "processor": "test_processor",
+        "operation": "sentiment"
+      },
+      "metric_type": "histogram"
+    },
+    {
+      "name": "api_requests_total",
+      "value": 1,
+      "timestamp": "2025-09-08 14:00:03.529160",
+      "labels": {
+        "endpoint": "/api/test",
+        "method": "GET",
+        "status": "200"
+      },
+      "metric_type": "counter"
+    },
+    {
+      "name": "api_request_duration_seconds",
+      "value": 0.15,
+      "timestamp": "2025-09-08 14:00:03.529374",
+      "labels": {
+        "endpoint": "/api/test",
+        "method": "GET"
+      },
+      "metric_type": "timer"
+    },
+    {
+      "name": "api_requests_total",
+      "value": 1,
+      "timestamp": "2025-09-08 14:00:03.529379",
+      "labels": {
+        "endpoint": "/api/test",
+        "method": "GET",
+        "status": "200"
+      },
+      "metric_type": "counter"
+    },
+    {
+      "name": "api_request_duration_seconds",
+      "value": 0.12,
+      "timestamp": "2025-09-08 14:00:03.529383",
+      "labels": {
+        "endpoint": "/api/test",
+        "method": "GET"
+      },
+      "metric_type": "timer"
+    },
+    {
+      "name": "database_operations_total",
+      "value": 10,
+      "timestamp": "2025-09-08 14:00:03.529393",
+      "labels": {
+        "operation": "SELECT",
+        "table": "test_table"
+      },
+      "metric_type": "counter"
+    },
+    {
+      "name": "database_operation_duration_seconds",
+      "value": 0.05,
+      "timestamp": "2025-09-08 14:00:03.529397",
+      "labels": {
+        "operation": "SELECT",
+        "table": "test_table"
+      },
+      "metric_type": "timer"
+    }
+  ]
+}
