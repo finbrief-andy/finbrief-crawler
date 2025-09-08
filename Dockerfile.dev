@@ -1,0 +1,83 @@
+# FinBrief Development Dockerfile
+FROM python:3.11-slim
+
+# Set build arguments
+ARG ENVIRONMENT=development
+
+# Set metadata
+LABEL maintainer="FinBrief Team" \
+      version="1.0.0-dev" \
+      description="FinBrief Financial News Crawler - Development" \
+      environment=$ENVIRONMENT
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    ENVIRONMENT=$ENVIRONMENT \
+    DEBIAN_FRONTEND=noninteractive
+
+# Create app user and group
+RUN groupadd -r finbrief && useradd -r -g finbrief finbrief
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    libpq-dev \
+    gcc \
+    g++ \
+    vim \
+    htop \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set work directory
+WORKDIR /app
+
+# Copy requirements first for better layer caching
+COPY requirements.txt requirements-docker.txt ./
+
+# Install Python dependencies (including development tools)
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt \
+    && pip install -r requirements-docker.txt \
+    && pip install \
+        pytest \
+        pytest-cov \
+        pytest-asyncio \
+        black \
+        flake8 \
+        mypy \
+        ipython \
+        jupyter \
+    && pip cache purge
+
+# Create necessary directories
+RUN mkdir -p /app/logs /app/logs/metrics /app/data /app/data/vectors \
+    && chown -R finbrief:finbrief /app
+
+# Copy application code
+COPY --chown=finbrief:finbrief . .
+
+# Switch to non-root user
+USER finbrief
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD curl -f http://localhost:8000/monitoring/ping || exit 1
+
+# Expose port
+EXPOSE 8000
+
+# Set up entrypoint
+COPY --chown=finbrief:finbrief docker/entrypoint.sh /entrypoint.sh
+USER root
+RUN chmod +x /entrypoint.sh
+USER finbrief
+
+# Default command
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["server"]

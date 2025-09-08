@@ -1,0 +1,22 @@
+# Additional dependencies for Docker deployment
+gunicorn==21.2.0
+uvicorn[standard]==0.27.0
+psutil==5.9.8
+python-multipart==0.0.9
+
+# Vector search dependencies (optional but recommended)
+chromadb==1.0.20
+sentence-transformers==5.1.0
+scikit-learn==1.7.1
+
+# Health monitoring
+psutil==5.9.8
+
+# Production WSGI server
+gunicorn==21.2.0
+
+# Optional: Redis for caching (if used)
+redis==5.0.4
+
+# Optional: Celery for background tasks (if used)
+celery==5.4.0

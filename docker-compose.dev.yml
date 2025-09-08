@@ -1,0 +1,165 @@
+# FinBrief Development Docker Compose Configuration
+version: '3.8'
+
+services:
+  # PostgreSQL Database (Development)
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: finbrief-postgres-dev
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-finbrief_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-finbrief}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-finbrief_dev_password}
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-finbrief}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - finbrief-dev-network
+
+  # Redis (Development)
+  redis-dev:
+    image: redis:7-alpine
+    container_name: finbrief-redis-dev
+    ports:
+      - "${REDIS_PORT:-6380}:6379"
+    volumes:
+      - redis_dev_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - finbrief-dev-network
+
+  # FinBrief API Server (Development with hot reload)
+  finbrief-api-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        ENVIRONMENT: development
+    container_name: finbrief-api-dev
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URI=postgresql://${POSTGRES_USER:-finbrief}:${POSTGRES_PASSWORD:-finbrief_dev_password}@postgres-dev:5432/${POSTGRES_DB:-finbrief_dev}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_URL=redis://redis-dev:6379/0
+      - HOST=0.0.0.0
+      - PORT=8000
+      - LOG_LEVEL=DEBUG
+      - LOG_DIR=/app/logs
+      - SECRET_KEY=${SECRET_KEY:-dev-secret-key-not-for-production-use-only}
+    ports:
+      - "${API_PORT:-8001}:8000"
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src:ro
+      - ./scripts:/app/scripts:ro
+      - ./config:/app/config:ro
+      - dev_logs:/app/logs
+      - dev_vector_data:/app/data/vectors
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/monitoring/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - finbrief-dev-network
+    command: ["server"]
+
+  # FinBrief News Crawler (Development)
+  finbrief-crawler-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        ENVIRONMENT: development
+    container_name: finbrief-crawler-dev
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URI=postgresql://${POSTGRES_USER:-finbrief}:${POSTGRES_PASSWORD:-finbrief_dev_password}@postgres-dev:5432/${POSTGRES_DB:-finbrief_dev}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_URL=redis://redis-dev:6379/0
+      - ENABLE_SCHEDULER=${ENABLE_SCHEDULER:-false}
+      - PIPELINE_INTERVAL_MINUTES=${PIPELINE_INTERVAL_MINUTES:-60}
+      - LOG_LEVEL=DEBUG
+      - LOG_DIR=/app/logs
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src:ro
+      - ./scripts:/app/scripts:ro
+      - ./config:/app/config:ro
+      - dev_crawler_logs:/app/logs
+      - dev_vector_data:/app/data/vectors
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+      finbrief-api-dev:
+        condition: service_healthy
+    restart: "no"  # Don't auto-restart in development
+    networks:
+      - finbrief-dev-network
+    command: ["crawler"]
+    profiles:
+      - crawler  # Optional service, start with --profile crawler
+
+  # Development Tools Container
+  finbrief-tools:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        ENVIRONMENT: development
+    container_name: finbrief-tools
+    environment:
+      - ENVIRONMENT=development
+      - DATABASE_URI=postgresql://${POSTGRES_USER:-finbrief}:${POSTGRES_PASSWORD:-finbrief_dev_password}@postgres-dev:5432/${POSTGRES_DB:-finbrief_dev}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - .:/app
+      - dev_logs:/app/logs
+      - dev_vector_data:/app/data/vectors
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+    networks:
+      - finbrief-dev-network
+    command: ["sleep", "infinity"]  # Keep container running for debugging
+    profiles:
+      - tools
+
+# Development-specific volumes
+volumes:
+  postgres_dev_data:
+    driver: local
+  redis_dev_data:
+    driver: local
+  dev_logs:
+    driver: local
+  dev_crawler_logs:
+    driver: local
+  dev_vector_data:
+    driver: local
+
+# Development network
+networks:
+  finbrief-dev-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
