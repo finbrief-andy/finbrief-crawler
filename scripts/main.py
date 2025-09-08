@@ -9,7 +9,7 @@ import sys
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
 
-import jwt
+from jose import jwt
 from fastapi import FastAPI, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from passlib.context import CryptContext
@@ -170,7 +170,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db=Depends(get_db)):
         if user_id_str is None:
             raise HTTPException(status_code=401, detail="Invalid token")
         user_id = int(user_id_str)
-    except jwt.PyJWTError:
+    except jwt.JWTError:
         raise HTTPException(status_code=401, detail="Could not validate token")
     except ValueError:
         raise HTTPException(status_code=401, detail="Invalid user ID in token")
