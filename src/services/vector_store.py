@@ -263,14 +263,14 @@ class VectorStore:
 
 
 # Global vector store instance
-_vector_store = None
+_vector_store_instance = None
 
 def get_vector_store() -> VectorStore:
     """Get singleton vector store instance"""
-    global _vector_store
-    if _vector_store is None:
-        _vector_store = VectorStore()
-    return _vector_store
+    global _vector_store_instance
+    if _vector_store_instance is None:
+        _vector_store_instance = VectorStore()
+    return _vector_store_instance
 
 
 if __name__ == "__main__":
